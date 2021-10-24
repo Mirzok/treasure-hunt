@@ -1,0 +1,18 @@
+{
+  "name": "treasure-hunt",
+  "version": "0.0.1",
+  "description": "Sourcegraph Extensibility team Coding Challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts < test.txt",
+    "test": "echo \"Try modifying test.txt & running npm start instead\" && exit 1"
+  },
+  "dependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.4",
+    "eslint": "^8.1.0"
+  }
+}

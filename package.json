@@ -8,6 +8,7 @@
     "test": "echo \"Try modifying test.txt & running npm start instead\" && exit 1"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   },

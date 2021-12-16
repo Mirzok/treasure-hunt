@@ -9,9 +9,12 @@
  * @returns {string} the steps to take to score the maximum number of points
  */
 
+// Naive approach: O(4^N)
 export default function (worldMap: string[][], maxTurns: number) {
     // Generator function for searching map, caching similar paths / states to make sure each step is new
-    function* searchWorld(rowIndex: number, columnIndex: number, turnsRemaining: number, turnsTaken = '', pointsCollected = 0) { 
+    function* searchWorld(rowIndex: number, columnIndex: number, turnsRemaining: number, turnsTaken = '', pointsCollected = 0, seen = new Set()) {
+        seen = new Set(seen);
+
         // Invalid coordinates, exit this branch of execution
         if (rowIndex < 0 || rowIndex >= worldMap.length || columnIndex < 0 || columnIndex >= worldMap[0].length) {
             return;
@@ -23,10 +26,13 @@ export default function (worldMap: string[][], maxTurns: number) {
             return;
         }
 
+        const locationCoordinate = String(rowIndex) + '-' + String(columnIndex);
         // Add available points
-        if (!isNaN(currentLocationCharacter as any)) { 
+        if (!seen.has(locationCoordinate) && !isNaN(currentLocationCharacter as any)) { 
             pointsCollected += Number(currentLocationCharacter);
         }
+
+        seen.add(locationCoordinate);
 
         // consider putting this before the cache
         if (turnsRemaining === 0) { 
@@ -46,7 +52,7 @@ export default function (worldMap: string[][], maxTurns: number) {
                 if (columnMod === 1) { direction = 'r';}
                 if (columnMod === -1) { direction = 'l';}
 
-                yield* searchWorld(rowIndex+rowMod, columnIndex+columnMod, turnsRemaining-1, turnsTaken + direction, pointsCollected);
+                yield* searchWorld(rowIndex+rowMod, columnIndex+columnMod, turnsRemaining-1, turnsTaken + direction, pointsCollected, seen);
             }
         }
     }
@@ -66,5 +72,5 @@ export default function (worldMap: string[][], maxTurns: number) {
     const startCoordinate = findStartCoordinate();
     let result = searchWorld(startCoordinate[0], startCoordinate[1], maxTurns);
     result = Array.from(result).reduce((previous: any, current: any) => previous.points > current.points ? previous : current);
-    return result.turns;
+    return result;
 }

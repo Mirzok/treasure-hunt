@@ -44,13 +44,13 @@ export default function (worldMap: string[][], maxTurns: number) {
         for (let rowMod = -1; rowMod < 2; rowMod++) { 
             for (let columnMod = -1; columnMod < 2; columnMod++) { 
                 // Skip diagonals and identity element
-                if (Math.abs(rowMod) === Math.abs(columnMod)) { continue; }
+                if (Math.abs(rowMod) === Math.abs(columnMod)) continue;
                     
                 let direction: string;
-                if (rowMod === 1) { direction = 'd';}
-                if (rowMod === -1) { direction = 'u';}
-                if (columnMod === 1) { direction = 'r';}
-                if (columnMod === -1) { direction = 'l';}
+                if (rowMod === 1) direction = 'd';
+                if (rowMod === -1) direction = 'u';
+                if (columnMod === 1) direction = 'r';
+                if (columnMod === -1) direction = 'l';
 
                 yield* searchWorld(rowIndex+rowMod, columnIndex+columnMod, turnsRemaining-1, turnsTaken + direction, pointsCollected, seen);
             }
